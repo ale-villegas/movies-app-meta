@@ -1,0 +1,103 @@
+@use '@styles/variables' as *;
+@use '@mixins' as *;
+
+.card-movie {
+  width: 250px;
+  border-radius: 0.3rem;
+  position: relative;
+  background-color: #545252ee !important;
+  color: #dde0e3;
+  border: 1px solid #6b6b6b;
+
+  .card-media {
+    object-fit: cover;
+    position: relative;
+    height: 300px;
+  }
+
+  .card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 6px;
+    text-align: center;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    .movie-title {
+      font-size: 15px;
+    }
+
+    .rating-box {
+      display: flex;
+      align-items: center;
+
+      .imdb-icon {
+        width: 30px;
+        margin-right: 8px;
+      }
+
+      .rating {
+        font-size: 15px;
+      }
+
+      .star-icon {
+        color: #ffb400;
+        font-size: 20px;
+        margin-left: 8px;
+      }
+    }
+  }
+
+  .chip-container {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100% - 20px);
+    .chip {
+      background-color: rgba(8, 59, 188, 0.7);
+      color: white;
+
+      &.movie {
+        background-color: rgba(8, 59, 188, 0.7);
+      }
+
+      &.series {
+        background-color: rgba(8, 188, 44, 0.7);
+      }
+    }
+
+    .favorite-icon {
+      background-color: rgba(255, 255, 255, 0.7);
+      &:hover {
+        background-color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+
+  .genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    .genre-chip {
+      background-color: #dde0e3;
+      font-size: 11px !important;
+
+    }
+  }
+}
+
+.color-skeleton {
+  background-color: rgba(145, 144, 144, 0.7) !important;
+}
