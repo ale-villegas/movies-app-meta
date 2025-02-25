@@ -1,0 +1,28 @@
+@use '@styles/variables' as *;
+@use '@mixins' as *; 
+
+
+.box-movies {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+.box-movies-list {
+display: flex;
+flex-wrap: wrap;
+gap: 1.5rem;
+@include flex-center
+
+
+}
+
+.load-more-btn {
+    background-color: white !important;
+    border: 1px solid #ccc !important;
+    border-radius: 3rem !important;
+    width: 20% !important;
+    margin: 0 auto !important;
+    &:hover {
+      background-color: #f4f4f4;
+    }
+  }

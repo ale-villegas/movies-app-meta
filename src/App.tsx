@@ -1,10 +1,16 @@
-import { AppRouter } from './routes/AppRouter'
-
+import { useEffect } from "react";
+import { AppRouter } from "./routes/AppRouter";
+import { useAppDispatch } from "./store/hooks";
+import { setFavoritesFromLocalStorage } from "./store/slices/moviesSlice";
 
 function App() {
+  const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    dispatch(setFavoritesFromLocalStorage());
+  }, []);
 
-  return <AppRouter/>
+  return <AppRouter />;
 }
 
-export default App
+export default App;

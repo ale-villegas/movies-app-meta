@@ -4,17 +4,17 @@ import { InputText } from "primereact/inputtext";
 
 
 interface SearchInputProps {
-  handleChange: ChangeEventHandler<HTMLInputElement>
+  onChange: ChangeEventHandler<HTMLInputElement>
   value: string;
 }
 
-export const SearchInput = ({ handleChange, value }: SearchInputProps) => {
+export const SearchInput = ({ onChange, value }: SearchInputProps) => {
   return (
     <InputText
       className="search-input"
       placeholder="Search movies.."
       value={value}
-      onChange={handleChange}
+      onChange={onChange}
     />
   );
 };

@@ -18,6 +18,7 @@ export interface Movie {
     query: string,
     favorites: MovieWithDetails[]
     totalResults: string
+    page: number
   }  
 
   export interface Rating {
@@ -51,4 +52,17 @@ export interface Movie {
     Production: string;
     Website: string;
     Response: string;
+  }
+
+  export interface SearchMoviesResult {
+    movies: MovieWithDetails[];
+    totalResults?: string;
+    error?: string;
+  } 
+
+  export interface ApiResponse {
+    Search: Movie[];
+    Error?: string;
+    Response: "False" | "True";
+    totalResults: string;
   }

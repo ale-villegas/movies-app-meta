@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -12,17 +11,14 @@ import { Favorite, FavoriteBorder, Star } from "@mui/icons-material";
 import { MovieWithDetails } from "../../types/Movies";
 import imdbIcon from "../../assets/imdb.png";
 import "./CardMovie.scss";
+import { useFavoritesMovies } from "../../hooks/useFavoritesMovies";
 
 interface CardMovieProps {
   movie: MovieWithDetails;
 }
 
 export const CardMovie = ({ movie }: CardMovieProps) => {
-  const [isFavorite, setIsFavorite] = useState(false);
-
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-  };
+  const { isFavorite, toggleFavorite } = useFavoritesMovies(movie);
 
   const genres = movie.Genre ? movie.Genre.split(",").slice(0, 3) : [];
   const capitalizedType =
@@ -56,7 +52,7 @@ export const CardMovie = ({ movie }: CardMovieProps) => {
           </IconButton>
         </Box>
       </Box>
-      <CardContent sx={{padding: "1rem 0.5rem"}}>
+      <CardContent sx={{ padding: "1rem 0.5rem" }}>
         <Box className="genres">
           {genres.map((genre, index) => (
             <Chip key={index} label={genre.trim()} className="genre-chip" />
