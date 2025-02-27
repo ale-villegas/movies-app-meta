@@ -19,13 +19,14 @@ import { getMovieById } from "../../services/servicesMovies";
 export const MovieDetail = () => {
   const { state } = useLocation();
   const { id } = useParams<{ id: string }>();
-  const movieFromStateRouter: MovieWithDetails | null = state?.movie || null;
-  const [movie, setMovie] = useState<MovieWithDetails | null>(
+  const movieFromStateRouter: MovieWithDetails  = state?.movie || null;
+  const [movie, setMovie] = useState<MovieWithDetails>(
     movieFromStateRouter
   );
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  
   const { isFavorite, toggleFavorite } = useFavoritesMovies(movie);
   const splitAndTrimValues = (value: string) =>
     value.split(",").map((item) => item.trim());

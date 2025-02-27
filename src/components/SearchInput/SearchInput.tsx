@@ -7,7 +7,8 @@ import "./SearchInput.scss";
 export const SearchInput = () => {
   const [localQuery, setLocalQuery] = useState("");
   const [type, setType] = useState("all");
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
+
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const isSearchRoute = pathname === "/";
