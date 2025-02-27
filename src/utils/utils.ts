@@ -18,15 +18,15 @@ export const movieSkeletonAnimation = {
   transition: { duration: 0.3 },
 };
 
-export const loadFavoritesFromLocalStorage = ():MovieWithDetails[] => {
-    const storedFavorites = localStorage.getItem('favoriteMovies');
-    if (storedFavorites) {
-      try {
-        return JSON.parse(storedFavorites);
-      } catch (error) {
-        console.error('Error parsing favorites from localStorage:', error);
-        return []; 
-      }
+export const loadFavoritesFromLocalStorage = (): MovieWithDetails[] => {
+  const storedFavorites = localStorage.getItem("favoriteMovies");
+  if (storedFavorites) {
+    try {
+      return JSON.parse(storedFavorites);
+    } catch (error) {
+      console.error("Error parsing favorites from localStorage:", error);
+      return [];
     }
-    return []; 
-  };
+  }
+  return [];
+};

@@ -5,16 +5,17 @@ import {
   SearchMoviesResult,
 } from "../types/Movies";
 
-const apiUrl = "https://www.omdbapi.com/";
-const apiKey = "85657700";
-
-
+const apiUrl = import.meta.env.VITE_API_URL;
+const apiKey = import.meta.env.VITE_API_KEY;
 
 export async function searchMovies(
   query: string,
-  page: number = 1
+  page: number = 1,
+  type?: string
 ): Promise<SearchMoviesResult> {
-  const url = `${apiUrl}?s="${query}"&apikey=${apiKey}&page=${page}`;
+  const url = `${apiUrl}?s=${encodeURIComponent(
+    query
+  )}&apikey=${apiKey}&page=${page}${type ? `&type=${type}` : ""}`;
 
   try {
     const response = await fetch(url);
@@ -37,6 +38,12 @@ export async function searchMovies(
           imdbRating: movieDetails?.imdbRating || "N/A",
           Genre: movieDetails?.Genre || "N/A",
           Plot: movieDetails?.Plot || "N/A",
+          Actors: movieDetails?.Actors || "N/A",
+          Country: movieDetails?.Country || "N/A",
+          Director: movieDetails?.Director || "N/A",
+          Language: movieDetails?.Language || "N/A",
+          Runtime: movieDetails?.Runtime || "N/A",
+          Writer: movieDetails?.Writer || "N/A",
         };
       })
     );
@@ -77,6 +84,12 @@ async function getMovieWithExtraDetails(
       imdbRating: data.imdbRating,
       Genre: data.Genre,
       Plot: data.Plot,
+      Actors: data.Actors,
+      Country: data.Country,
+      Director: data.Director,
+      Language: data.Language,
+      Runtime: data.Runtime,
+      Writer: data.Writer,
     };
   } catch (error) {
     console.error("Request failed:", error);
@@ -86,7 +99,7 @@ async function getMovieWithExtraDetails(
 
 export async function getMovieById(
   id: string
-): Promise<MovieCompleteDetails | null> {
+): Promise<MovieWithDetails | null> {
   const url = `${apiUrl}?i=${id}&apikey=${apiKey}`;
 
   try {
@@ -96,7 +109,26 @@ export async function getMovieById(
     }
     const data: MovieCompleteDetails = await response.json();
 
-    return data;
+    if (data.Response === "True") {
+      return {
+        Actors: data.Actors,
+        Country: data.Country,
+        Director: data.Director,
+        Genre: data.Genre,
+        imdbID: data.imdbID,
+        imdbRating: data.imdbRating,
+        Language: data.Language,
+        Plot: data.Plot,
+        Poster: data.Poster,
+        Runtime: data.Runtime,
+        Title: data.Title,
+        Type: data.Type,
+        Writer: data.Writer,
+        Year: data.Year,
+      };
+    } else {
+      throw new Error("Movie not found!");
+    }
   } catch (error) {
     console.error("Request failed:", error);
     return null;

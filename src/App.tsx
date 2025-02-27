@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { AppRouter } from "./routes/AppRouter";
 import { useAppDispatch } from "./store/hooks";
-import { setFavoritesFromLocalStorage } from "./store/slices/moviesSlice";
+import { setFavoritesFromLocalStorage } from "./store/slices/favoritesSlice";
 
 function App() {
   const dispatch = useAppDispatch();

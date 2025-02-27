@@ -1,13 +1,9 @@
-
 import { MovieWithDetails } from "../types/Movies";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import {
-  deleteFavorite,
-  setFavorite,
-} from "../store/slices/moviesSlice";
+import { deleteFavorite, setFavorite } from "../store/slices/favoritesSlice";
 
 export const useFavoritesMovies = (movie: MovieWithDetails) => {
-  const { favorites } = useAppSelector((state) => state.movies);
+  const { favorites } = useAppSelector((state) => state.favorites);
   const dispatch = useAppDispatch();
   const isFavorite = favorites.find((f) => f.imdbID === movie?.imdbID);
 
@@ -32,7 +28,6 @@ export const useFavoritesMovies = (movie: MovieWithDetails) => {
       setFavoriteMoviesOnLocal(updatedFavorites);
     }
   };
-
 
   return { isFavorite, toggleFavorite };
 };

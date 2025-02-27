@@ -1,20 +1,63 @@
-@use '@styles/variables' as *;
+@use "@styles/variables" as *;
+.search-container {
+    width: 50%;
+
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
 .search-input {
     background-color: $background-secondary;
-    border-radius: 1rem;
-    height: 50px;
     border: none;
-    padding: 1rem;
     color: $primary-color;
-    width: 30%;
+    width: 70%;
+}
+.search-select {
+    background-color: $background-secondary;
+    border-radius: 1rem;
 
+    border: none;
+    padding: 0 1rem;
+    color: $primary-color;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 150px;
+    appearance: none;
+    display: flex;
+    align-items: center;
 }
 
-.search-input:focus {
-    border: none; 
-    outline: none; 
-  }
 
-  .search-input::placeholder {
-  color: #b6b5b5;
-  }
+.search-select:focus,
+.search-select:active {
+    background-color: $background-secondary;
+    outline: none;
+    border: none;
+}
+
+
+.search-select option {
+    background-color: $background-secondary;
+    color: $primary-color;
+    padding: 10px;
+}
+
+
+.search-select option:checked {
+    background-color:$background-secondary;
+}
+.search-input:focus {
+    border: none;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: #b6b5b5;
+}
+
+@media (max-width: 767px ) {
+    .search-container{
+      width: 100%;
+     
+  
+    } }

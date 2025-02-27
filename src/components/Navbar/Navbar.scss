@@ -1,0 +1,33 @@
+@use "@styles/variables" as *;
+@use "@mixins" as *;
+
+.nav-header {
+    display: flex;
+   flex-wrap: wrap;
+    @include flex-center;
+    width: 90%;
+    justify-content: space-between;
+    margin: 0 auto;
+
+  
+}
+
+.nav-button {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 8px 16px;
+    transition: text-decoration 0.3s ease-in-out;
+}
+
+.nav-button:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 767px ) {
+  .nav-header{
+    width: 100%;
+   
+
+  }
+}

@@ -1,28 +1,37 @@
-@use '@styles/variables' as *;
-@use '@mixins' as *; 
-
+@use "@styles/variables" as *;
+@use "@mixins" as *;
 
 .box-movies {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
 }
 .box-movies-list {
-display: flex;
-flex-wrap: wrap;
-gap: 1.5rem;
-@include flex-center
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1rem;
+  @include flex-center;
 
+}
 
+.find-movies-box {
+  display: flex;
+  justify-content: center;
+  height: 70px;
+  gap: 1rem;
+  width: 100%;
 }
 
 .load-more-btn {
-    background-color: white !important;
-    border: 1px solid #ccc !important;
-    border-radius: 3rem !important;
-    width: 20% !important;
-    margin: 0 auto !important;
-    &:hover {
-      background-color: #f4f4f4;
-    }
+  background-color: white !important;
+  border: 1px solid #ccc !important;
+  border-radius: 3rem !important;
+  width: 20% !important;
+  margin: 0 auto !important;
+  &:hover {
+    background-color: #f4f4f4;
   }
+}
+

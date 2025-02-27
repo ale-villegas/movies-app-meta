@@ -1,0 +1,18 @@
+@use "@styles/variables" as *;
+@use "@mixins" as *;
+
+.box-favorites {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem
+}
+.box-favorites-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    @include flex-center;
+}
+
+
+
+  

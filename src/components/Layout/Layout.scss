@@ -27,19 +27,12 @@ main {
     margin: 0 auto;
 }
 
-.nav-header {
-    display: flex;
-    gap: 1rem;
-}
+@media (max-width: 767px) {
+    header {
+        height: 150px;
+    }
 
-.nav-button {
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
-    padding: 8px 16px;
-    transition: text-decoration 0.3s ease-in-out;
-}
-
-.nav-button:hover {
-    text-decoration: underline;
+    main {
+        padding-top: 170px;
+    }
 }

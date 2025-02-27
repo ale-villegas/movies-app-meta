@@ -1,0 +1,84 @@
+@use "@styles/variables" as *;
+@use "@mixins" as *;
+
+.movie-detail {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    background-color: $background-primary !important ;
+    color: $primary-color !important;
+  }
+  
+  .movie-container {
+    display: flex;
+  max-width: 1000px;
+  gap: 3rem;
+  align-items: flex-start;
+
+  }
+  
+  .movie-poster {
+    max-width: 400px;
+    border-radius: 10px;
+
+  }
+  
+  .movie-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 !important;
+  }
+  
+  .movie-title {
+    font-weight: bold;
+  }
+  
+  .movie-plot {
+
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  
+  .chips {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+
+  
+  .detail {
+    display: flex;
+    flex-direction: column;
+
+    gap: 1rem;
+  }
+  
+  .detail-title {
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  
+  .detail-chip {
+    background-color: #1976d2 !important;
+
+    font-weight: bold;
+    width: fit-content;
+  }
+
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }

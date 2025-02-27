@@ -1,77 +1,105 @@
-import { ChangeEvent, useCallback } from "react";
-import debounce from "debounce";
-
-import {
-  setLoading,
-  setMoreMovies,
-  setMovies,
-  setPage,
-  setQuery,
-} from "../store/slices/moviesSlice";
+import { useEffect, useState } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { searchMovies } from "../services/servicesMovies";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { MovieWithDetails } from "../types/Movies";
 
 export const useSearchMovies = () => {
-  const dispatch = useAppDispatch();
-  const { query, page } = useAppSelector((state) => state.movies);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [movies, setMovies] = useState<MovieWithDetails[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [totalResults, setTotalResults] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-  const debouncedSearch = useCallback(
-    debounce(async (query: string) => {
-      if (!query.trim()) return;
+  const query = searchParams.get("query") || "";
+  const page = Number(searchParams.get("page")) || 1;
+  const type = searchParams.get("type") || "all";
+  const { pathname } = useLocation();
 
-      dispatch(setLoading(true));
+  const fetchMovies = async (
+    searchQuery: string,
+    pageNumber: number,
+    movieType: string
+  ) => {
+    setLoading(true);
+    setError(null);
 
-      dispatch(setPage(1));
-
-      try {
-        const data = await searchMovies(query, 1);
-
-        if (data.error) {
-          dispatch(
-            setMovies({ movies: [], totalResults: "0", error: data.error })
-          );
-        } else {
-          dispatch(
-            setMovies({
-              movies: data.movies,
-              totalResults: data.totalResults,
-            })
-          );
-        }
-        window.scrollTo(0, 0);
-      } catch (error) {
-        console.error("Unexpected error:", error);
-        setMovies({ movies: [], totalResults: "0", error: "Unexpected error" });
-      } finally {
-        dispatch(setLoading(false));
-      }
-    }, 1500),
-    [dispatch]
-  );
-
-  const handleSearchMovies = (event: ChangeEvent<HTMLInputElement>) => {
-    const newQuery = event.target.value;
-    dispatch(setQuery(newQuery));
-    debouncedSearch(newQuery);
-  };
-
-  const getMoreResults = async () => {
     try {
-      dispatch(setPage(page + 1));
-      dispatch(setLoading(true));
-      const data = await searchMovies(query, page + 1);
+      const data = await searchMovies(
+        searchQuery,
+        pageNumber,
+        movieType !== "all" ? movieType : undefined
+      );
+
       if (data.error) {
-        dispatch(setMoreMovies({ movies: [], error: data.error }));
+        setMovies([]);
+        setError(data.error);
+      } else if (pageNumber === 1 && data.totalResults) {
+        setMovies(data.movies);
+        setTotalResults(data.totalResults);
+        setError(null);
       } else {
-        dispatch(setMoreMovies({ movies: data.movies }));
+        setMovies((prevMovies) => [...prevMovies, ...data.movies]);
       }
-    } catch (error) {
-      console.error(error);
-      dispatch(setMoreMovies({ movies: [], error: "Unexpected error" }));
+    } catch (err) {
+      console.error("Unexpected error:", err);
+      setMovies([]);
+      setError("Unexpected error occurred. Please try again.");
     } finally {
-      dispatch(setLoading(false));
+      setLoading(false);
     }
   };
 
-  return { handleSearchMovies, getMoreResults };
+  const getMoreResults = () => {
+    const nextPage = page + 1;
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set("page", nextPage.toString());
+      return newParams;
+    });
+  };
+
+  useEffect(() => {
+    if (!query.trim()) {
+      setMovies([]);
+      setTotalResults("");
+      setError(null);
+      sessionStorage.removeItem("lastSearchQuery");
+      sessionStorage.removeItem("lastSearchPage");
+      sessionStorage.removeItem("lastSearchType");
+      return;
+    }
+
+    sessionStorage.setItem("lastSearchQuery", query);
+    sessionStorage.setItem("lastSearchPage", page.toString());
+    sessionStorage.setItem("lastSearchType", type);
+
+    fetchMovies(query, page, type);
+  }, [query, page, type]);
+
+  useEffect(() => {
+    if (pathname.includes("favorites")) {
+      const savedQuery = sessionStorage.getItem("lastSearchQuery");
+      const savedPage = sessionStorage.getItem("lastSearchPage");
+      const savedType = sessionStorage.getItem("lastSearchType");
+
+      if (savedQuery && savedPage) {
+        setSearchParams({
+          query: savedQuery,
+          page: savedPage,
+          ...(savedType && savedType !== "all" ? { type: savedType } : {}),
+        });
+      }
+    }
+  }, [pathname]);
+
+  return {
+    query,
+    page,
+    type,
+    movies,
+    loading,
+    error,
+    totalResults,
+    getMoreResults,
+  };
 };

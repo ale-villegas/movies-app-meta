@@ -10,6 +10,12 @@ export interface Movie {
     imdbRating: string;
     Genre: string;
     Plot: string;
+    Director: string;
+    Writer: string;
+    Actors: string;
+    Language: string;
+    Country: string;
+    Runtime: string;
   }
   export interface MoviesState {
     movies: MovieWithDetails[];

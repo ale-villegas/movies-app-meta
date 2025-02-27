@@ -1,5 +1,5 @@
-@use '@styles/variables' as *;
-@use '@mixins' as *;
+@use "@styles/variables" as *;
+@use "@mixins" as *;
 
 .card-movie {
   width: 250px;
@@ -8,7 +8,6 @@
   background-color: #545252ee !important;
   color: #dde0e3;
   border: 1px solid #6b6b6b;
-
 
   .card-media {
     object-fit: cover;
@@ -94,11 +93,16 @@
     .genre-chip {
       background-color: #dde0e3;
       font-size: 11px !important;
-
     }
   }
 }
 
 .color-skeleton {
   background-color: rgba(145, 144, 144, 0.7) !important;
+}
+
+@media (max-width: 767px) {
+  .card-movie {
+    width: 370px;
+  }
 }
